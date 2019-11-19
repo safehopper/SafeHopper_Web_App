@@ -7,7 +7,7 @@ let params = new URLSearchParams(search);
 let foo = params.get('query');
 
 const api = {
-    key: "AIzaSyDunQzzS1U8QHliMAYJ6BdnFDRRkc6Iue8",
+    key: process.env.apiKey,
 }
 
 class MapContainer extends Component {
@@ -46,13 +46,20 @@ class MapContainer extends Component {
 
     componentDidMount() {
         this.getWaypoints();
+        this.interval = setInterval(this.waypointHelper(), 1000);
+
+    }
+
+    waypointHelper() {
+        this.getWaypoints();
     }
 
     async getWaypoints() {
+        console.log("GET WAYPOINTS");
         if(foo != null) {
-            const response = await axios.post("http://localhost:3000/alerts/getAlert",
-                    { "key":"pxC3bE5Wzm7dWy2eaF5p", "alertId": foo, 	"email":"justinterrydev@gmail.com"});
-            if(response.data.content.waypoints[0].waypoints != null){
+            const response = await axios.post("https://safe-hopper-server.herokuapp.com/alerts/getAlert",
+                    { "key":"pxC3bE5Wzm7dWy2eaF5p", "alertId": foo, "email":"justinterrydev@gmail.com"}, );
+            if(response.data.content.waypoints[0] != null){
                 this.setMarkers(response.data.content.waypoints[0].waypoints);
             }
         }
