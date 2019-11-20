@@ -6,7 +6,7 @@ console.log(process.env.REACT_APP_API_KEY);
 let search = window.location.search;
 let params = new URLSearchParams(search);
 let foo = params.get('query');
-
+//
 const api = {
     key: process.env.REACT_APP_API_KEY,
 }
