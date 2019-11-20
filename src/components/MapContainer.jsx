@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { Marker, Map, GoogleApiWrapper } from 'google-maps-react';
 const axios = require('axios');
 
+console.log(process.env.REACT_APP_API_KEY);
 let search = window.location.search;
 let params = new URLSearchParams(search);
 let foo = params.get('query');
 
 const api = {
-    key: process.env.apiKey,
+    key: process.env.REACT_APP_API_KEY,
 }
+
+console.log(api.key);
 
 class MapContainer extends Component {
     state = {
