@@ -7,7 +7,7 @@ let params = new URLSearchParams(search);
 let foo = params.get('query');
 //
 const api = {
-    key: "AIzaSyDunQzzS1U8QHliMAYJ6BdnFDRRkc6Iue8",
+    key: process.env.REACT_APP_API_KEY,
 }
 
 class MapContainer extends Component {
