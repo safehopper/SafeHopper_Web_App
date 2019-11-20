@@ -8,10 +8,8 @@ let params = new URLSearchParams(search);
 let foo = params.get('query');
 //
 const api = {
-    key: process.env.REACT_APP_API_KEY,
+    key: "AIzaSyDunQzzS1U8QHliMAYJ6BdnFDRRkc6Iue8",
 }
-
-console.log(api.key);
 
 class MapContainer extends Component {
     state = {
@@ -48,30 +46,20 @@ class MapContainer extends Component {
     };
 
     componentDidMount() {
-        this.getWaypoints();
-        this.interval = setInterval(this.waypointHelper(), 1000);
-
-    }
-
-    waypointHelper() {
-        this.getWaypoints();
-    }
-
-    async getWaypoints() {
-        console.log("GET WAYPOINTS");
-        if(foo != null) {
-            const response = await axios.post("https://safe-hopper-server.herokuapp.com/alerts/getAlert",
-                    { "key":"pxC3bE5Wzm7dWy2eaF5p", "alertId": foo, "email":"justinterrydev@gmail.com"}, );
-            if(response.data.content.waypoints[0] != null){
-                this.setMarkers(response.data.content.waypoints[0].waypoints);
+        setInterval(async () => {
+        
+            if(foo != null) {
+                const response = await axios.post("https://safe-hopper-server.herokuapp.com/alerts/getAlert",
+                        { "key":"pxC3bE5Wzm7dWy2eaF5p", "alertId": foo, "email":"justinterrydev@gmail.com"}, );
+                if(response.data.content.waypoints[0] != null){
+                    this.setMarkers(response.data.content.waypoints[0].waypoints);
+                }
             }
-        }
+        }, 10000);
     }
 
     setMarkers(wps) {
-        console.log("WPS: " + wps);
         this.setState({waypoints: wps, zoom: 20, centerPoint: {lat: wps[wps.length-1].latitude, lng: wps[wps.length-1].longitude}})
-        console.log(this.state);
         this.forceUpdate();
     }
 }
