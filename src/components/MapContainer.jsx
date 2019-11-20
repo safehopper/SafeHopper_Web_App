@@ -34,12 +34,26 @@ class MapContainer extends Component {
                     initialCenter={this.state.initialPoint}
                     center = {this.state.centerPoint}
                 >{this.state.waypoints.map((waypoint, i) => {
-                    return (
-                      <Marker
-                        key={i}
-                        position={{ lat: waypoint.latitude, lng: waypoint.longitude }}
-                      />
-                    );
+                    if(i === this.state.waypoints.length-1){
+                        return (                    
+                            <Marker
+                              key={i}
+                              position={{ lat: waypoint.latitude, lng: waypoint.longitude }}
+                            />
+                          )
+                    }else{
+                        return (                    
+                        <Marker
+                            key={i}
+                            position={{ lat: waypoint.latitude, lng: waypoint.longitude }}
+                            icon={{
+                                url: "https://i.ibb.co/jLxJm2D/dot.png",
+                                anchor: new window.google.maps.Point(24,24),
+                                scaledSize: new window.google.maps.Size(24,24)
+                            }}
+                        />
+                        );
+                        }
                   })}</Map>
             </div>
         )
@@ -55,7 +69,7 @@ class MapContainer extends Component {
                     this.setMarkers(response.data.content.waypoints[0].waypoints);
                 }
             }
-        }, 10000);
+        }, 3000);
     }
 
     setMarkers(wps) {
