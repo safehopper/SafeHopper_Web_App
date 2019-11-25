@@ -68,7 +68,7 @@ class MapContainer extends Component {
                     this.setMarkers(response.data.content.waypoints[0].waypoints);
                 }
             }
-        }, 3000);
+        }, 5000);
     }
 
     setMarkers(wps) {
